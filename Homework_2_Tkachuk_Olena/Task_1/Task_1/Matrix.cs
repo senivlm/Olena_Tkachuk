@@ -53,6 +53,20 @@ namespace Task_1
             MatrixArray = matrixArray;
         }
 
+
+        public void ShowArray()
+        {
+            for (int i = 0; i < MatrixArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < MatrixArray.GetLength(1); j++)
+                {
+                    Console.Write(MatrixArray[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
         public void VerticalSnakeFromLeft(int firstNumber)
         {
             Console.WriteLine("Vertical snake from left to right");
@@ -75,15 +89,7 @@ namespace Task_1
                 }                      
      
             }
-            for (int i = 0; i < MatrixArray.GetLength(0); i++)
-            {
-                for (int j = 0; j < MatrixArray.GetLength(1); j++)
-                {
-                    Console.Write(MatrixArray[i, j] + "\t");              
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
+            ShowArray();
         }
 
         public void VerticalSnakeFromRight(int firstNumber)
@@ -107,15 +113,7 @@ namespace Task_1
                     }
                 }
             }
-            for (int i = 0; i < MatrixArray.GetLength(0); i++)
-            {
-                for (int j = 0; j < MatrixArray.GetLength(1); j++)
-                {
-                    Console.Write(MatrixArray[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
+            ShowArray();
         }
 
         public void DiagonalSnakeFromLeftSide(int firstNumber)
@@ -147,16 +145,7 @@ namespace Task_1
             }
 
 
-            for (int i = 0; i < MatrixArray.GetLength(0); i++)
-            {
-                for (int j = 0; j < MatrixArray.GetLength(1); j++)
-                {
-                    Console.Write(MatrixArray[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-
-            Console.WriteLine();
+            ShowArray();
         }
 
         public void DiagonalSnakeFromRightSide(int firstNumber)
@@ -188,17 +177,7 @@ namespace Task_1
                 MatrixArray[y, x] = firstNumber - i + 1;
             }
 
-
-            for (int i = 0; i < MatrixArray.GetLength(0); i++)
-            {
-                for (int j = 0; j < MatrixArray.GetLength(1); j++)
-                {
-                    Console.Write(MatrixArray[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-
-            Console.WriteLine();
+            ShowArray();
         }
 
         public void MatrixSnake()
@@ -237,16 +216,7 @@ namespace Task_1
                     counter++;
                 }
             }
-                for (int i = 0; i < MatrixArray.GetLength(0); i++)
-                {
-                    for (int j = 0; j < MatrixArray.GetLength(1); j++)
-                    {
-                        Console.Write(MatrixArray[i, j] + "\t");
-                    }
-                    Console.WriteLine();
-                }            
-
-            Console.WriteLine();
+            ShowArray();
         }
     }
 }
