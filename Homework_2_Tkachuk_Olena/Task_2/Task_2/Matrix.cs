@@ -62,31 +62,25 @@ namespace Task_2
             int firstIndex = 0;
             int lastIndex = 0;           
             int maxLength = 1;
+            int array = ColorsArray[0, 0];
 
             for(int i = 0; i < ColorsArray.GetLength(0); i++)
             {
-                int counter = 1;
-
-                for (int j = 0; j < ColorsArray.GetLength(1); j++)
+                for(int j = 0; j < ColorsArray.GetLength(1) - 1; j++)
                 {
-                    for (int k = j + 1; k < ColorsArray.GetLength(1); k++)
+                    if (ColorsArray[i, j] == ColorsArray[i, j + 1])
                     {
-                        if (ColorsArray[i, j] == ColorsArray[i, k])
-                        {
-                            counter++;
-                            color = ColorsArray[i, j];                     
-                        }
-                        color = ColorsArray[i, k];
-                    }
-                    if (counter >= maxLength)
-                    {
-                        maxLength = counter;
+                        color = ColorsArray[i, j];
+                        maxLength++;
+                        firstIndex = j;
+                        lastIndex = j + maxLength - 1;
+                        Console.WriteLine("Color of pixel: {0}\nFirst index: \t{1}\nLast index: \t{2}\nLength: \t{3}\n", color, firstIndex, lastIndex, maxLength);
                     }
                     
-                }
+                }                
             }           
 
-            Console.WriteLine("Color of pixel: {0}\nFirst index: \t{1}\nLast index: \t{2}\nLength: \t{3}\n", color, firstIndex, lastIndex, maxLength);
+
         }
        
     }
