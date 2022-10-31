@@ -35,7 +35,8 @@ namespace Task_1
             Columns = columns;
             MatrixArray = new int[rows, columns];
         }
-        
+
+            
         public Matrix(int rows, int columns)
         {
             if (rows < 0 || columns < 0)
@@ -217,6 +218,21 @@ namespace Task_1
                 }
             }
             ShowArray();
+        }
+
+        public override string ToString()
+        {
+            string result = "";
+
+            for(int i = 0; i < MatrixArray.GetLength(0); i++)
+            {
+                for(int j = 0; j < MatrixArray.GetLength(1); j++)
+                {
+                   result += MatrixArray[i, j] + "\t";
+                    Console.WriteLine();
+                }
+            }
+            return result;
         }
     }
 }
