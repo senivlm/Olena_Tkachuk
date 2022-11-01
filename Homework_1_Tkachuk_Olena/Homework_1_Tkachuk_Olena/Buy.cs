@@ -33,7 +33,7 @@ namespace Homework_1_Tkachuk_Olena
             this.productList = new Dictionary<Product, int>();
         }
         public Buy(Dictionary<Product, int> productList)       
-        {
+        {// а навіщо в конструктор передавали словник. Ви ж його не використовуєте. Див. стр. 37.
             this.productList = new Dictionary<Product, int>();
         }
 
