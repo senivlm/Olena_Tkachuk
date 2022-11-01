@@ -1,7 +1,7 @@
 ﻿namespace Homework_1_Tkachuk_Olena
 {
     internal class Program
-    {
+    {// Вітаю. Все доступно.
         static void Main(string[] args)
         {
             Product milk = new Product("Milk", 32.45, 1);
@@ -12,7 +12,7 @@
             Check.ProductInfo(milk);
             Check.ProductInfo(bread);
             Check.ProductInfo(meat);
-
+//краще огорнути класом.
             Dictionary<Product, int> buyList = new Dictionary<Product, int>()
             {
                 {milk, 2 },
