@@ -10,64 +10,67 @@ namespace Task_1
     {
         public Product[] productsArray;
 
-        public int typeOfProduct = 0;
-        public string nameOfProduct = "";
-        public double priceOfProduct = 0;
-        public double weightOfProduct = 0;
-        public int numberOfProduct = 0;
+        public int typeOfProduct;
+        public string nameOfProduct;
+        public double priceOfProduct;
+        public double weightOfProduct;
         public MeatCategory categoryOfMeat;
         public TypesOfMeat typeOfMeat;
-        public int expirationOfProduct = 0;
+        public int expirationOfProduct;
 
         public Product[] ProductsArray
         {
-            get;
-            set;
+            get { return productsArray; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+                else
+                {
+                    productsArray = value;
+                }
+            }
         }
 
-
-        public Storage(Product[] productsArray)
+        public Storage(Product[] products)
         {
-            if(productsArray == null)
+            productsArray = new Product[products.Length];
+
+            for (int i = 0; i < productsArray.Length; i++)
             {
-                throw new ArgumentNullException("array");
-            }
-            else
-            {
-                ProductsArray = productsArray;
-            }
+                productsArray[i] = products[i];
+            }            
         }
 
         public Storage()
-        {
-            
-                ProductsArray = productsArray;
-            
+        {            
+            this.productsArray = new Product[default];
+            this.typeOfProduct = 0;
+            this.priceOfProduct = 0;
+            this.weightOfProduct = 0;
+            this.expirationOfProduct = 0;
+            this.nameOfProduct = "";
         }
 
         public Product this[int index]
         {
             get
             {
-                try
+                if (index < 0 || index > productsArray.Length)
                 {
-                    return ProductsArray[index];
+                    throw new ArgumentException("Index Out Of Range Exception");
                 }
-                catch (IndexOutOfRangeException e)
-                {
-                    throw new ArgumentException(e.Message);
-                }                
+                return productsArray[index];                    
             }
             set
-            {                
-                try
+            {
+                if (index < 0 || index > productsArray.Length)
                 {
-                    ProductsArray[index] = value;
+                    throw new ArgumentException("Index Out Of Range Exception");
                 }
-                catch (IndexOutOfRangeException e)
-                {
-                    throw new ArgumentException(e.Message);
-                }
+                productsArray[index] = value;                
             }
         }
 
@@ -76,7 +79,9 @@ namespace Task_1
             Console.WriteLine("How much product do you want to buy?");
             int number = Int32.Parse(Console.ReadLine());
 
-            for(int i = 0; i < number; i++)
+            Product[] products = new Product[number];
+
+            for (int i = 0; i < products.Length; i++)
             {
                 Console.WriteLine("What kind of product do you want to buy: 1 - product, 2 - meat, 3 - dairy product");
                 typeOfProduct = Int32.Parse(Console.ReadLine());
@@ -94,8 +99,7 @@ namespace Task_1
                 {
                     case 1:
                         {
-                            ProductsArray[i] = new Product(nameOfProduct, priceOfProduct, weightOfProduct);
-                            CheckProductsConsoleInfo();
+                            products[i] = new Product(nameOfProduct, priceOfProduct, weightOfProduct);
                             break;
                         }
                     case 2:
@@ -103,11 +107,10 @@ namespace Task_1
                             Console.WriteLine("Choose the category of meet: Higher, First or Second: ");
                             categoryOfMeat = (MeatCategory)Enum.Parse(typeof(MeatCategory), Console.ReadLine());
 
-                            Console.WriteLine("Choose the type of meat: lamb, veal, pork or chicken");
+                            Console.WriteLine("Choose the type of meat: Lamb, Veal, Pork or Chicken");
                             typeOfMeat = (TypesOfMeat)Enum.Parse(typeof(TypesOfMeat), Console.ReadLine());
 
-                            ProductsArray[i] = new Meat(nameOfProduct, priceOfProduct, weightOfProduct, categoryOfMeat, typeOfMeat);
-                            CheckProductsConsoleInfo();
+                            products[i] = new Meat(nameOfProduct, priceOfProduct, weightOfProduct, categoryOfMeat, typeOfMeat);
                             break;
                         }
                     case 3:
@@ -115,8 +118,7 @@ namespace Task_1
                             Console.WriteLine("Please, enter an expiration of the dairy product: ");
                             expirationOfProduct = Int32.Parse(Console.ReadLine());
 
-                            ProductsArray[i] = new Dairy_products(nameOfProduct, priceOfProduct, weightOfProduct, expirationOfProduct);
-                            CheckProductsConsoleInfo();
+                            products[i] = new Dairy_products(nameOfProduct, priceOfProduct, weightOfProduct, expirationOfProduct);
                             break;
                         }
                     default:
@@ -126,7 +128,8 @@ namespace Task_1
                         }                
                 }
             
-            }    
+            }
+            CheckProductsConsoleInfo(number);
         }
 
         public void DataInformation()
@@ -143,7 +146,7 @@ namespace Task_1
             Console.WriteLine("Our products:");
             foreach (Product product in products)
             {
-                Console.WriteLine("Name: {0}; Price: {1}; Weight: {2}", 
+                Console.WriteLine("Name: {0}; Price: {1} UAH; Weight: {2} kg", 
                     product.Name, product.Price, product.Weight);
             }
             Console.WriteLine();
@@ -159,7 +162,7 @@ namespace Task_1
             Console.WriteLine("Our meat:");
             foreach (Meat item in meat)
             {
-                Console.WriteLine("Name: {0}; Price: {1}; Weight: {2}; Category: {3}; Sort: {4};",
+                Console.WriteLine("Name: {0}; Price: {1} UAH; Weight: {2} kg; Category: {3}; Sort: {4}",
                     item.Name, item.Price, item.Weight, item.Category, item.MeatSort);
             }
             Console.WriteLine();
@@ -173,39 +176,40 @@ namespace Task_1
             };
 
             Console.WriteLine("Our dairy products:");
-            foreach (Meat item in meat)
+            foreach (Dairy_products item in dairy_Products)
             {
-                Console.WriteLine("Name: {0}; Price: {1}; Weight: {2}; Category: {3}; Sort: {4}",
-                    item.Name, item.Price, item.Weight, item.Category, item.MeatSort);
+                Console.WriteLine("Name: {0}; Price: {1} UAH; Weight: {2} kg; Expiration: {3} days",
+                    item.Name, item.Price, item.Weight, item.ProductsExpiration);
             }
         }
 
-        public void CheckProductsConsoleInfo()
+        public void CheckProductsConsoleInfo(int size)
         {
+            
             if (typeOfProduct == 1)
             {
                 Console.WriteLine("Information about product:");
-                foreach (var item in ProductsArray)
+                for (int i = 0; i < size; i++)
                 {
-                    Console.WriteLine("Name: \t{0},\nPrice: \t{1},\nWeight: \t{2},\n",
+                    Console.WriteLine("Name: \t{0};\nPrice: \t{1};\nWeight: {2}\n",
                         nameOfProduct, priceOfProduct, weightOfProduct);
                 }
             }
             else if (typeOfProduct == 2)
             {
                 Console.WriteLine("Information about meat:");
-                foreach (var item in ProductsArray)
+                for (int i = 0; i < size; i++)
                 {
-                    Console.WriteLine("Name: \t{0},\nPrice: \t{1},\nWeight: \t{2},\nCategory: \t{3},\nSort: \t{4}\n",
+                    Console.WriteLine("Name: \t{0};\nPrice: \t{1};\nWeight: {2};\nCategory: {3};\nSort: \t{4}\n",
                         nameOfProduct, priceOfProduct, weightOfProduct, categoryOfMeat, typeOfMeat);
                 }
             }
             else if (typeOfProduct == 3)
             {
                 Console.WriteLine("Information about dairy product:");
-                foreach (var item in ProductsArray)
+                for (int i = 0; i < size; i++)
                 {
-                    Console.WriteLine("Name: \t{0},\nPrice: \t{1},\nWeight: \t{2},\nExspiration: \t{3}\n",
+                    Console.WriteLine("Name: \t{0};\nPrice: \t{1};\nWeight: {2};\nExspiration: {3}\n",
                         nameOfProduct, priceOfProduct, weightOfProduct, expirationOfProduct);
                 }
             }
@@ -219,22 +223,21 @@ namespace Task_1
         {
             int counter = 0;
 
-            foreach(var item in ProductsArray)
+            for (int i = 0; i < productsArray.Length; i++)
             {
-                if(typeof(Meat).IsAssignableFrom(item.GetType()))
+                if (productsArray[i].GetType() == typeof(Meat))
                 {
+                    Console.WriteLine(productsArray[i]);
                     counter++;
-                }
-                else
-                {
-                    Console.WriteLine("The item does not exist!");
-                }
-            }
+                }                
+            }            
+            
+            Console.WriteLine("Number of meat: {0}", counter);
         }
 
         public void ChangePrice(double percent)
         {
-            for (int i = 0; i < ProductsArray.Length; i++)
+            for (int i = 0; i < productsArray.Length; i++)
             {
                 ProductsArray[i].ChangePrice(percent);
             }
