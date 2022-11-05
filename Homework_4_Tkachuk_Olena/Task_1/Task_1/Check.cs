@@ -24,5 +24,7 @@ namespace Task_1
                 Console.WriteLine("\t{0} {1} pcs", item.Key.Name, item.Value);
             }
         }
+
+
     }
 }

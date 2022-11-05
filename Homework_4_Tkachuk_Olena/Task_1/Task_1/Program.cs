@@ -19,21 +19,42 @@
             Console.WriteLine(pork.Equals(chicken));
             Console.WriteLine();
 
-            Product[] productAssortiment = { bread, productMeat, orange, pork, chicken };
-            
-            Product[] productAssortiment2 = { bread, bread2, orange };
-            Storage storages2 = new Storage (productAssortiment2);
+                    
+            Console.WriteLine("ICompare interface in the class Product(sort by lenght's name):");
 
-            Array.Sort(productAssortiment);
-            Console.WriteLine("IComparable interface in the class Product (sort with price):");
+            Product[] productAssortiment2 = { bread, chicken, orange };
             
-            foreach(var item in productAssortiment)
+            Array.Sort(productAssortiment2, new ProductComparerbyName());
+
+            foreach(var item in productAssortiment2)
             {
                 Console.WriteLine(item);
             }
-            Console.WriteLine();
+            Console.WriteLine( );
 
-            Console.WriteLine("IComparable interface in the class Storage(sort with name):");
+            Console.WriteLine("ICompare interface in the class Product(sort by price):");
+            Array.Sort(productAssortiment2, new ProductComparerByPrice());
+
+            foreach (var item in productAssortiment2)
+            {
+                Console.WriteLine(item);
+            }
+             
+            Console.WriteLine();
+            Product[] productAssortiment = { bread, productMeat, orange, pork, chicken };
+            List<Product> list = new List<Product>()
+            {
+                new Product(" Green apples", 12, 1),
+                new Meat("Home chicken", 100, 1, MeatCategory.First, TypesOfMeat.Chicken),
+                new Product("ice-cream", 50, 0.4)
+            };
+
+            Storage storage = new Storage();
+            storage.SortByPrice(list);
+            storage.SortByName(list);
+            storage.SortByWeight(list);
+
+
 
         }
     }

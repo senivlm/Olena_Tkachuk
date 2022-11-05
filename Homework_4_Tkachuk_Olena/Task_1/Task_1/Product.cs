@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task_1
 {
-    internal class Product : IComparable
+    internal class Product
     {
         private string name = "";
 
@@ -114,19 +114,5 @@ namespace Task_1
             return base.GetHashCode();
         }
 
-        public int CompareTo(object? obj)
-        {
-            Product item = obj as Product;
-
-            if (item != null)
-            {
-                return this.price.CompareTo(item.Price);
-            }
-            else
-            {
-                throw new Exception("Unable to compare");
-            }
-
-        }
     }
 }

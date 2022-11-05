@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Task_1
 {
-    internal class Storage : IComparable
+    internal class Storage
     {
-        public Product[] productsArray;
+        public List<Product> productsArray;
 
         public int typeOfProduct;
         public string nameOfProduct;
@@ -18,7 +18,7 @@ namespace Task_1
         public TypesOfMeat typeOfMeat;
         public int expirationOfProduct;
 
-        public Product[] ProductsArray
+        public List<Product> ProductsArray
         {
             get { return productsArray; }
             set
@@ -34,31 +34,28 @@ namespace Task_1
             }
         }
 
-        public Storage(Product[] products)
+        public Storage(List<Product> productsArray)
         {
-            productsArray = new Product[products.Length];
-
-            for (int i = 0; i < productsArray.Length; i++)
-            {
-                productsArray[i] = products[i];
-            }
+            this.productsArray = productsArray.ToList();
+            
         }
 
         public Storage()
         {
-            this.productsArray = new Product[default];
+
             this.typeOfProduct = 0;
             this.priceOfProduct = 0;
             this.weightOfProduct = 0;
             this.expirationOfProduct = 0;
             this.nameOfProduct = "";
+            this.productsArray = productsArray;         
         }
 
         public Product this[int index]
         {
             get
             {
-                if (index < 0 || index > productsArray.Length)
+                if (index < 0 || index > productsArray.Count())
                 {
                     throw new ArgumentException("Index Out Of Range Exception");
                 }
@@ -66,7 +63,7 @@ namespace Task_1
             }
             set
             {
-                if (index < 0 || index > productsArray.Length)
+                if (index < 0 || index > productsArray.Count())
                 {
                     throw new ArgumentException("Index Out Of Range Exception");
                 }
@@ -78,6 +75,8 @@ namespace Task_1
         {
             Console.WriteLine("How much product do you want to buy?");
             int number = Int32.Parse(Console.ReadLine());
+
+            List<Product> product = new List<Product>();
 
             Product[] products = new Product[number];
 
@@ -99,7 +98,7 @@ namespace Task_1
                 {
                     case 1:
                         {
-                            products[i] = new Product(nameOfProduct, priceOfProduct, weightOfProduct);
+                            product.Add(new Product(nameOfProduct, priceOfProduct, weightOfProduct));
                             break;
                         }
                     case 2:
@@ -110,7 +109,7 @@ namespace Task_1
                             Console.WriteLine("Choose the type of meat: Lamb, Veal, Pork or Chicken");
                             typeOfMeat = (TypesOfMeat)Enum.Parse(typeof(TypesOfMeat), Console.ReadLine());
 
-                            products[i] = new Meat(nameOfProduct, priceOfProduct, weightOfProduct, categoryOfMeat, typeOfMeat);
+                            product.Add(new Meat(nameOfProduct, priceOfProduct, weightOfProduct, categoryOfMeat, typeOfMeat));
                             break;
                         }
                     case 3:
@@ -118,7 +117,7 @@ namespace Task_1
                             Console.WriteLine("Please, enter an expiration of the dairy product: ");
                             expirationOfProduct = Int32.Parse(Console.ReadLine());
 
-                            products[i] = new DairyProducts(nameOfProduct, priceOfProduct, weightOfProduct, expirationOfProduct);
+                            product.Add(new DairyProducts(nameOfProduct, priceOfProduct, weightOfProduct, expirationOfProduct));
                             break;
                         }
                     default:
@@ -223,13 +222,13 @@ namespace Task_1
         {
             int counter = 0;
 
-            for (int i = 0; i < productsArray.Length; i++)
+            for (int i = 0; i < productsArray.Count(); i++)
             {
                 if (productsArray[i].GetType() == typeof(Meat))
                 {
-                    Console.WriteLine(productsArray[i]);
-                    counter++;
+                   counter++;
                 }
+
             }
 
             Console.WriteLine("Number of meat: {0}", counter);
@@ -237,7 +236,7 @@ namespace Task_1
 
         public void ChangePrice(double percent)
         {
-            for (int i = 0; i < productsArray.Length; i++)
+            for (int i = 0; i < productsArray.Count(); i++)
             {
                 ProductsArray[i].ChangePrice(percent);
             }
@@ -246,44 +245,48 @@ namespace Task_1
         public override string ToString()
         {
             string result = "";
-            for (int i = 0; i < ProductsArray.Length; i++)
+            for (int i = 0; i < ProductsArray.Count(); i++)
             {
                 result += ProductsArray[i] + "/n";
             }
             return $"Product: {result}";
         }
 
-        public int Compare(Storage? first, Storage? second)
+       
+        public void SortByPrice(List<Product> productsArray)
         {
-            if (first.priceOfProduct > second.priceOfProduct)
+            Console.WriteLine("Storage class: sort by price");
+            productsArray.Sort((x, y) => x.Price.CompareTo(y.Price));
+
+            foreach(var item in productsArray)
             {
-                return 1;
-                Console.WriteLine("The second price is less than the first one");
+                Console.WriteLine(item);
             }
-            else if (first.priceOfProduct < second.priceOfProduct)
-            {
-                return -1;
-                Console.WriteLine("The first price is less than the second one");
-            }
-            else
-            { 
-                return 0;
-                Console.WriteLine("The first price is equal the second one");
-            }
+            Console.WriteLine();
         }
 
-        public int CompareTo(object? productsArray)
+        public void SortByName(List<Product> productsArray)
         {
-            Storage item = productsArray as Storage;
+            Console.WriteLine("Storage class: sort by name");
+            productsArray.Sort((x, y) => x.Name.CompareTo(y.Name));
 
-            if (item != null)
+            foreach (var item in productsArray)
             {
-                return this.nameOfProduct.CompareTo(item.nameOfProduct);
+                Console.WriteLine(item);
             }
-            else
+            Console.WriteLine();
+        }
+
+        public void SortByWeight(List<Product> productsArray)
+        {
+            Console.WriteLine("Storage class: sort by weight");
+            productsArray.Sort((x, y) => x.Weight.CompareTo(y.Weight));
+
+            foreach (var item in productsArray)
             {
-                throw new Exception("Unable to compare");
+                Console.WriteLine(item);
             }
+            Console.WriteLine();
         }
     }
 }
