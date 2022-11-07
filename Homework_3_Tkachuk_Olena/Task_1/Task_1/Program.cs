@@ -27,9 +27,9 @@
             storage.DataInformation();
             Console.WriteLine();
 
-            //Console.WriteLine("Storage console information");
-            //storage.ConsoleInfo();
-            //Console.WriteLine();
+            Console.WriteLine("Storage console information");
+            storage.ConsoleInfo();
+            Console.WriteLine();
 
             List<Product> testProducts = new List<Product>(){ bread, apples, milk, pork, lamb};
             Storage storageProducts = new Storage(testProducts);
