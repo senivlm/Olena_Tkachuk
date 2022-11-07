@@ -27,14 +27,14 @@
             storage.DataInformation();
             Console.WriteLine();
 
-            Console.WriteLine("Storage console information");
-            storage.ConsoleInfo();
-            Console.WriteLine();
+            //Console.WriteLine("Storage console information");
+            //storage.ConsoleInfo();
+            //Console.WriteLine();
 
-            Product[] testProducts = { bread, apples, milk, pork, lamb};
+            List<Product> testProducts = new List<Product>(){ bread, apples, milk, pork, lamb};
             Storage storageProducts = new Storage(testProducts);
             Console.WriteLine("All meet what we have found:");
-            storageProducts.FindMeat();
+            storageProducts.FindMeat(testProducts);
             storageProducts.ChangePrice(0.5);
 
 

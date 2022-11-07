@@ -8,13 +8,13 @@ namespace Homework_1_Tkachuk_Olena
 {
     internal class Buy
     {       
-        public Dictionary<Product, int> productList;             
+       private List<Product> productList;
 
-        public Dictionary<Product, int> ProductList
+        public List<Product> ProductList
         {
             get
             {
-                return productList;
+                return new List<Product>(productList).ToList();               
             }
             set
             {
@@ -28,25 +28,38 @@ namespace Homework_1_Tkachuk_Olena
                 }
             }
         }
-        public Buy()
+        public Buy(params Product[] products)
         {
-            this.productList = new Dictionary<Product, int>();
-        }
-        public Buy(Dictionary<Product, int> productList)       
-        {
-            this.productList = new Dictionary<Product, int>();
-        }
+            productList = new List<Product>();
 
-        public static void TotalPriceOfProducts(Dictionary<Product, int> productList)
-        {
-           double totalPrice = 0;
-                      
-            foreach(KeyValuePair<Product, int> item in productList)
+            for (int i = 0; i < products.Length; i++)
             {
-                totalPrice += item.Value * item.Key.Price;               
+                productList.Add(products[i]);
+            }
+        }
+       
+        public void TotalPriceOfProducts()
+        {    
+
+            double totalPrice = 0;       
+                      
+            foreach(Product item in productList)
+            {
+                totalPrice += item.Price;
             }          
          
             Console.WriteLine("\nTotal price: \n\t{0} UAH", totalPrice);
+        }
+
+        public override string ToString()
+        {
+            string result = "";
+            for (int i = 0; i < productList.Count; i++)
+            {
+                result += $"{i + 1}. {productList[i].Name}\n";
+            }
+
+            return result;
         }
 
     }

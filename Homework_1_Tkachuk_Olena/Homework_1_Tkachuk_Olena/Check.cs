@@ -16,13 +16,11 @@ namespace Homework_1_Tkachuk_Olena
             
         }
 
-        public static void BuyInfo(Dictionary<Product, int> productList)
+        public static void BuyInfo(Buy buy)
         {
-            Console.WriteLine("\nPurchase information:\n");
-            foreach (var item in productList)
-            {
-                Console.WriteLine("\t{0} {1} pcs", item.Key.Name, item.Value);
-            }
+            Console.WriteLine("Information about shopping cart:");
+            Console.WriteLine(buy);
+            
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Task_1
 {
     internal class Storage
     {
-        public Product[] productsArray;
+        public List<Product> productsArray;
 
         public int typeOfProduct;
         public string nameOfProduct;
@@ -18,7 +18,7 @@ namespace Task_1
         public TypesOfMeat typeOfMeat;
         public int expirationOfProduct;
 
-        public Product[] ProductsArray
+        public List<Product> ProductsArray
         {
             get { return productsArray; }
             set
@@ -34,19 +34,15 @@ namespace Task_1
             }
         }
 
-        public Storage(Product[] products)
+        public Storage(List<Product> productsArray)
         {
-            productsArray = new Product[products.Length];
-
-            for (int i = 0; i < productsArray.Length; i++)
-            {
-                productsArray[i] = products[i];
-            }            
+            this.productsArray = new List<Product>();
+                     
         }
 
         public Storage()
         {            
-            this.productsArray = new Product[default];
+            this.productsArray = new List<Product>();
             this.typeOfProduct = 0;
             this.priceOfProduct = 0;
             this.weightOfProduct = 0;
@@ -58,7 +54,7 @@ namespace Task_1
         {
             get
             {
-                if (index < 0 || index > productsArray.Length)
+                if (index < 0 || index > productsArray.Count())
                 {
                     throw new ArgumentException("Index Out Of Range Exception");
                 }
@@ -66,7 +62,7 @@ namespace Task_1
             }
             set
             {
-                if (index < 0 || index > productsArray.Length)
+                if (index < 0 || index > productsArray.Count())
                 {
                     throw new ArgumentException("Index Out Of Range Exception");
                 }
@@ -76,20 +72,20 @@ namespace Task_1
 
         public void ConsoleInfo()
         {
-            Console.WriteLine("How much product do you want to buy?");
+            Console.WriteLine("How much product do you want to enter?");
             int number = Int32.Parse(Console.ReadLine());
 
-            Product[] products = new Product[number];
+            List<Product> products = new List<Product>();            
 
-            for (int i = 0; i < products.Length; i++)
+            for (int i = 0; i < number; i++)
             {
-                Console.WriteLine("What kind of product do you want to buy: 1 - product, 2 - meat, 3 - dairy product");
+                Console.WriteLine("What kind of product: 1 - product, 2 - meat, 3 - dairy product");
                 typeOfProduct = Int32.Parse(Console.ReadLine());
 
                 Console.WriteLine("Please, enter a name of the product: ");
                 nameOfProduct = Console.ReadLine();
 
-                Console.WriteLine("Please, enter a price of the choosen product: ");
+                Console.WriteLine("Please, enter a price of the product: ");
                 priceOfProduct = Double.Parse(Console.ReadLine());
 
                 Console.WriteLine("What weight the product has: ");
@@ -99,7 +95,7 @@ namespace Task_1
                 {
                     case 1:
                         {
-                            products[i] = new Product(nameOfProduct, priceOfProduct, weightOfProduct);
+                            products.Add(new Product(nameOfProduct, priceOfProduct, weightOfProduct));
                             break;
                         }
                     case 2:
@@ -110,7 +106,7 @@ namespace Task_1
                             Console.WriteLine("Choose the type of meat: Lamb, Veal, Pork or Chicken");
                             typeOfMeat = (TypesOfMeat)Enum.Parse(typeof(TypesOfMeat), Console.ReadLine());
 
-                            products[i] = new Meat(nameOfProduct, priceOfProduct, weightOfProduct, categoryOfMeat, typeOfMeat);
+                            products.Add(new Meat(nameOfProduct, priceOfProduct, weightOfProduct, categoryOfMeat, typeOfMeat));
                             break;
                         }
                     case 3:
@@ -118,7 +114,7 @@ namespace Task_1
                             Console.WriteLine("Please, enter an expiration of the dairy product: ");
                             expirationOfProduct = Int32.Parse(Console.ReadLine());
 
-                            products[i] = new Dairy_products(nameOfProduct, priceOfProduct, weightOfProduct, expirationOfProduct);
+                            products.Add(new Dairy_products(nameOfProduct, priceOfProduct, weightOfProduct, expirationOfProduct));
                             break;
                         }
                     default:
@@ -134,7 +130,7 @@ namespace Task_1
 
         public void DataInformation()
         {
-            Product[] products = new Product[]
+            List<Product> products = new List<Product>()
             {
                 new Product("Bread", 12, 0.7),
                 new Product("Sausage", 66.00, 0.5),
@@ -143,31 +139,20 @@ namespace Task_1
                 new Product("Apples", 18.00, 1)
             };
 
-            Console.WriteLine("Our products:");
-            foreach (Product product in products)
-            {
-                Console.WriteLine("Name: {0}; Price: {1} UAH; Weight: {2} kg", 
-                    product.Name, product.Price, product.Weight);
-            }
+            Check.CheckDataInformation(products);
             Console.WriteLine();
 
-            Meat[] meat = new Meat[]
+            List<Product> meat = new List<Product>()
             {
                 new Meat("Nice Lamb", 150, 1, MeatCategory.Higher, TypesOfMeat.Lamb),
                 new Meat("Taaty Veal", 167.00, 1, MeatCategory.First, TypesOfMeat.Veal),
                 new Meat("Great Pork", 100, 1, MeatCategory.First, TypesOfMeat.Pork),
                 new Meat("Home Chicken", 105.60, 1, MeatCategory.Higher, TypesOfMeat.Chicken)
             };
-
-            Console.WriteLine("Our meat:");
-            foreach (Meat item in meat)
-            {
-                Console.WriteLine("Name: {0}; Price: {1} UAH; Weight: {2} kg; Category: {3}; Sort: {4}",
-                    item.Name, item.Price, item.Weight, item.Category, item.MeatSort);
-            }
+            Check.CheckDataInformation(meat);
             Console.WriteLine();
 
-            Dairy_products[] dairy_Products = new Dairy_products[]
+            List<Product> dairyProducts = new List<Product>()
             {
                 new Dairy_products("Milk 2,5%", 33, 0.9, 5),
                 new Dairy_products("Strawberry Yogurt", 50, 0.5, 10),
@@ -175,20 +160,14 @@ namespace Task_1
                 new Dairy_products("Kefir", 25.75, 1, 20)
             };
 
-            Console.WriteLine("Our dairy products:");
-            foreach (Dairy_products item in dairy_Products)
-            {
-                Console.WriteLine("Name: {0}; Price: {1} UAH; Weight: {2} kg; Expiration: {3} days",
-                    item.Name, item.Price, item.Weight, item.ProductsExpiration);
-            }
+            Check.CheckDataInformation(dairyProducts);            
         }
 
         public void CheckProductsConsoleInfo(int size)
-        {
-            
+        {            
             if (typeOfProduct == 1)
             {
-                Console.WriteLine("Information about product:");
+                Console.WriteLine("Information about new product:");
                 for (int i = 0; i < size; i++)
                 {
                     Console.WriteLine("Name: \t{0};\nPrice: \t{1};\nWeight: {2}\n",
@@ -197,7 +176,7 @@ namespace Task_1
             }
             else if (typeOfProduct == 2)
             {
-                Console.WriteLine("Information about meat:");
+                Console.WriteLine("Information about new meat:");
                 for (int i = 0; i < size; i++)
                 {
                     Console.WriteLine("Name: \t{0};\nPrice: \t{1};\nWeight: {2};\nCategory: {3};\nSort: \t{4}\n",
@@ -206,7 +185,7 @@ namespace Task_1
             }
             else if (typeOfProduct == 3)
             {
-                Console.WriteLine("Information about dairy product:");
+                Console.WriteLine("Information about new dairy product:");
                 for (int i = 0; i < size; i++)
                 {
                     Console.WriteLine("Name: \t{0};\nPrice: \t{1};\nWeight: {2};\nExspiration: {3}\n",
@@ -219,25 +198,25 @@ namespace Task_1
             }
         }
 
-        public void FindMeat()
+        public void FindMeat(List<Product> productsArray)
         {
             int counter = 0;
 
-            for (int i = 0; i < productsArray.Length; i++)
+            foreach(var item in productsArray)
             {
-                if (productsArray[i].GetType() == typeof(Meat))
+                if (item.GetType() == typeof(Meat))
                 {
-                    Console.WriteLine(productsArray[i]);
+                    Console.WriteLine(item.Name);
                     counter++;
-                }                
-            }            
+                }
+            }
             
             Console.WriteLine("Number of meat: {0}", counter);
         }
 
         public void ChangePrice(double percent)
         {
-            for (int i = 0; i < productsArray.Length; i++)
+            for (int i = 0; i < productsArray.Count(); i++)
             {
                 ProductsArray[i].ChangePrice(percent);
             }
@@ -246,7 +225,7 @@ namespace Task_1
         public override string ToString()
         {
             string result = "";
-            for (int i = 0; i < ProductsArray.Length; i++)
+            for (int i = 0; i < ProductsArray.Count(); i++)
             {
                 result += ProductsArray[i] + "/n";
             }

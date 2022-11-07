@@ -86,5 +86,6 @@ namespace Homework_1_Tkachuk_Olena
         {
             return Name + " " + Price + " " + Weight;
         }
+
     }
 }
