@@ -10,7 +10,7 @@ namespace Task_1
     {
         private int rows;
         private int columns;     
-
+//Ви дозволили зміну розміру, не змінивши виділену пам'ять
         public int Rows
         {
             get;
@@ -69,7 +69,7 @@ namespace Task_1
         }
 
         public void VerticalSnakeFromLeft(int firstNumber)
-        {
+        {//Друк і заповнення в одному методі!!!
             Console.WriteLine("Vertical snake from left to right");
 
             for (int i = 0; i < MatrixArray.GetLength(1); i++)
@@ -133,7 +133,7 @@ namespace Task_1
             {
                 int xNextStep = x - step;
                 int yNextStep = y + step;
-
+// Показати на парі, запустивши для парного і непарного розміру матриці.
                 if (xNextStep < 0 || yNextStep < 0 || xNextStep == Rows || yNextStep == Columns)
                 {
                     step *= -1;
